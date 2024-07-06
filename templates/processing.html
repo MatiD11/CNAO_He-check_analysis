@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Analysis</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Image Analysis</h1>
+
+    <div id="progress-bar">
+        <div id="progress"></div>
+    </div>
+
+    <div id="status"></div>
+
+    <footer>
+        <div class="footer-left">Matilde Dondi - Software and Computing for Nuclear and Subnuclear Physics</div>
+        <div class="footer-right">Data taken at CNAO, Pavia</div>
+    </footer>
+
+    <script>
+        function updateStatus() {
+            fetch(`/status?proton_range={{ proton_range }}`)
+                .then(response => {
+                    if (response.redirected) {
+                        window.location.href = response.url;
+                    } else {
+                        return response.text();
+                    }
+                })
+                .then(data => {
+                    if (data) {
+                        document.getElementById('status').innerText = data;
+                        const lines = data.split('\n');
+                        const completed = lines.filter(line => line.startsWith('Pixel-position')).length;
+                        const total = 9;
+                        const percentage = (completed / total) * 100;
+                        document.getElementById('progress').style.width = percentage + '%';
+                    }
+                });
+        }
+
+        setInterval(updateStatus, 2000); // Poll every 2 seconds
+    </script>
+
+</body>
+</html>

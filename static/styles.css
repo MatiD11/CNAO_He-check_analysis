@@ -1,0 +1,160 @@
+body {
+    font-family: Arial, sans-serif;
+    font-size: 24px;
+    background-color: #e6f7ff;
+    margin: 0;
+    padding: 0;
+}
+
+h1 {
+    font-size: 36px;
+    text-align: center;
+    color: #00509e;
+    margin-top: 20px;
+}
+
+p {
+    text-align: center;
+    color: #00509e;
+    margin-top: 20px;
+}
+
+label, select, input {
+    font-size: 24px;
+}
+
+form {
+    text-align: center;
+    margin-top: 20px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 20px;
+}
+
+#progress-bar {
+    width: 80%;
+    margin: 20px auto;
+    background-color: #f3f3f3;
+    height: 40px;
+    display: flex;
+    align-items: center;
+}
+
+#progress {
+    height: 40px;
+    background-color: #4caf50;
+    transition: width 0.5s ease;
+}
+
+#status {
+    font-size: 24px;
+    text-align: left;
+    width: 80%;
+    margin: 50px auto; /* Increase top and bottom margin for more space */
+    clear: both; /* Ensure it clears any floated elements like the footer */
+}
+
+.split-container {
+    display: flex;
+    justify-content: center;
+    align-items: center; /* Center align items vertically */
+    height: 75vh; /* Full height to center vertically */
+}
+
+.left-column {
+    flex: 0 0 35%; /* Smaller width for the left column */
+    padding: 20px;
+    text-align: center;
+}
+
+.right-column {
+    flex: 1;
+    padding: 20px;
+}
+
+.left-column img {
+    max-width: 100%;
+    height: auto;
+}
+
+.container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px;
+}
+
+.content {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px;
+    background: white;
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+th, td {
+    border: 1px solid #00509e;
+    padding: 10px;
+    text-align: center;
+}
+
+th {
+    background-color: #00509e;
+    color: white;
+}
+
+.button-group {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center; /* Center the buttons horizontally */
+    align-items: center;
+    flex-wrap: wrap; /* Allow buttons to wrap onto a new line if necessary */
+}
+
+.button-group > * {
+    margin: 10px; /* Add space around all elements inside .button-group */
+}
+
+.button-group a {
+    background-color: #00509e;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.button-group a:hover {
+    background-color: #003f7f;
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    background-color: #00509e;
+    color: white;
+    padding: 20px 0;
+    font-size: 20px;
+    display: flex;
+    justify-content: space-between;
+    box-shadow: 0 -2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.footer-left {
+    margin-left: 20px;
+}
+
+.footer-right {
+    margin-right: 20px;
+    padding-right: 20px;
+}

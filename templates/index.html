@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Analysis</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <h1>Image Analysis</h1>
+
+    <div class="split-container">
+        <div class="left-column">
+            <img src="{{ url_for('static', filename='exp_box.jpg') }}" alt="Internal Image">
+        </div>
+        <div class="right-column">
+            <form method="post" id="proton-form">
+                <label for="proton_range">Select proton range (mm):</label>
+                <select id="proton_range" name="proton_range">
+                    {% for range in valid_ranges %}
+                        <option value="{{ range }}">{{ range }}</option>
+                    {% endfor %}
+                </select><br><br>
+                <input type="submit" value="Submit" id="submit">
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-left">Matilde Dondi - Software and Computing for Nuclear and Subnuclear Physics</div>
+        <div class="footer-right">Data taken at CNAO, Pavia</div>
+    </footer>
+
+</body>
+</html>

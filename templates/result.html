@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Analysis Result</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+
+<body>
+    <h1>Analysis Result</h1>
+    <div class="container">
+        <div class="content">
+            <img src="{{ url_for('static', filename='proton_' + proton_range + '/hit_map.png') }}" alt="Processed Image" width="100%">
+            <h2>Computed Ranges</h2>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Integration Method</th>
+                        <th>Clusterization Method</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for range_integration, range_clusterization in zip(ranges_integration, ranges_clusterization) %}
+                    <tr>
+                        <td>{{ '%.2f'|format(range_integration) }}</td>
+                        <td>{{ '%.2f'|format(range_clusterization) }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <h3>Statistics</h3>
+            <p>Integration Method:
+                {% if mean_integration is not none and std_integration is not none %}
+                {{ '%.1f'|format(mean_integration) }} ± {{ '%.1f'|format(std_integration) }}
+                {% else %}
+                N/A
+                {% endif %}
+            </p>
+            <p>Clusterization Method:
+                {% if mean_clusterization is not none and std_clusterization is not none %}
+                {{ '%.1f'|format(mean_clusterization) }} ± {{ '%.1f'|format(std_clusterization) }}
+                {% else %}
+                N/A
+                {% endif %}
+            </p>
+            <div class="button-group">
+                <a href="{{ url_for('static', filename='proton_' + proton_range + '/hit_map.png') }}" download="hit_map.png">
+                    Download Hit Map
+                </a>
+                <a href="{{ url_for('static', filename='proton_' + proton_range + '.zip') }}" download="proton_{{ proton_range }}.zip">
+                    Download All Results
+                </a>
+            </div>
+            <div class="button-group">
+                <a href="#footer" onclick="shutdownServer()">Shutdown</a>
+                <a href="{{ url_for('index') }}">Restart</a>
+            </div>
+        </div>
+    </div>
+    <footer>
+        <div class="footer-left">Matilde Dondi - Software and Computing for Nuclear and Subnuclear Physics</div>
+        <div class="footer-right">Data taken at CNAO, Pavia</div>
+    </footer>
+    <script>
+        function shutdownServer() {
+            fetch("{{ url_for('shutdown_server') }}", {
+                method: "POST"
+            }).then(() => {
+                window.location.href = "{{ url_for('shutdown_page') }}";
+            });
+        }
+    </script>
+</body>
+
+</html>
