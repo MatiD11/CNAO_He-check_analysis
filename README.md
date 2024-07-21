@@ -1,7 +1,7 @@
 # CNAO He-check analysis
 ## Project description
 
-This project analyzes .tif images obtained from a camera setup designed to study the Bragg peak position of a proton beam in a scintillator. The Bragg peak is the point where the proton beam releases the maximum amount of energy. The data were acquired at CNAO (Centro Nazionale di Adroterapia Oncologica) in Pavia within the context of the He-check project. Further information about the project and the calculation used to perform the analisys can be found in the file CNAO_He_check.pdf .
+This project analyzes .tif images obtained from a camera setup designed to study the Bragg peak position of a proton beam in a scintillator. The Bragg peak is the point where the proton beam releases the maximum amount of energy. The data were acquired at CNAO (Centro Nazionale di Adroterapia Oncologica) in Pavia within the context of the He-check project. Further information about the project and the calculation used to perform the analisys can be found in the file [CNAO_He_check.pdf](doc/CNAO_He_check.pdf) inside the  [docs](./docs) folder.
 
 ### Experimental Setup
 
@@ -14,12 +14,12 @@ The proton beam is directed laterally at the scintillator from the side opposite
 To help visualize the system, refer to the following images:
 
 <p align="center">
-  <img src="setup_beam_mirror.png" alt="Setup Image 1" width="400" />
+  <img src="doc/setup_beam_mirror.png" alt="Setup Image 1" width="400" />
   <br><em>Image 1: Top view schematic of the setup </em>
 </p>
 
 <p align="center">
-  <img src="xy_coord.png" alt="Setup Image 2" width="400" />
+  <img src="doc/xy_coord.png" alt="Setup Image 2" width="400" />
   <br><em>Image 2: Lateral view schematic of the setup with the proton beam entering the page</em>
 </p>
 
