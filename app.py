@@ -98,7 +98,7 @@ def find_position(nx, ny, nz, L_):
 def gaussian(x, a, x0, sigma):
     return a * np.exp(-(x - x0)**2 / (2 * sigma**2))
 
-
+#define the biggest cluster
 def find_biggest_clust(half_points, half_labels):
     unique_clusters = np.unique(half_labels)
     unique_clusters = unique_clusters[unique_clusters != -1]
@@ -138,6 +138,7 @@ def tif2array(page):
     
     return img
 
+#find bragg peak position - integration method
 def find_bragg_peak(image):
     scint_row = np.sum(image[2:2158, 1280:], axis=0)
     scint_row = scint_row[::-1]
@@ -149,6 +150,7 @@ def find_bragg_peak(image):
     bragg_peak_x = n_pz - closest_index
     return bragg_peak_x
 
+#find y position - integration method
 def find_y_range(image):
     y_scint_column = np.sum(image[2:2158, 1280:],axis=1)
     threshold_fraction = 0.5
@@ -162,6 +164,7 @@ def find_y_range(image):
     y_range = (start_bright + end_bright) // 2
     return y_range
 
+#find x position - integration method
 def find_x_mirror(image):
     mirror_row = np.sum(image[2:2158, :1280], axis=0)
     spot_mirror = np.argmax(mirror_row)
@@ -182,6 +185,7 @@ def find_x_mirror(image):
     x_mirror = int(np.round(par_fit[1]))
     return x_mirror
 
+#find x, y and range using the clusterization method
 def cluster_img(img):
     # Perform some additional filtering to help clusterization
     img[img < (img.max()*0.1)] = 0
@@ -219,7 +223,7 @@ def cluster_img(img):
     else:
         print("There are no clusters in the right half of the image.")
 
-
+#image processing
 def process_img(proton_range):
 
     out_directory = Path(f'static/proton_{proton_range}')
@@ -255,9 +259,7 @@ def process_img(proton_range):
                     line = f"{position[1]}\t{position[5]}\t{position[3]}\t{cluster_position[1]}\t{cluster_position[5]}\t{cluster_position[3]}\n"            
                     outfile.write(line)       
 
-                    '''img_rgb = cv2.cvtColor(img, cv2.COLOR_GRAY2RGB)
-                    img_dot = cv2.circle(img_rgb, (bragg_peak, y_range), radius=15, color=(255, 0, 0), thickness=-1)
-                    img_dot = cv2.circle(img_dot, (x_mirror, y_range), radius=15, color=(255, 0, 0), thickness=-1)'''
+                    #plots
                     plt.figure(figsize=(12, 6))
                     plt.subplot(1, 2, 1)
                     
@@ -297,7 +299,7 @@ def process_img(proton_range):
     plt.savefig(out_directory / f'hit_map.png', dpi=300, bbox_inches='tight')
     plt.close(fig)
 
-    #bragg peaks for different x positions   
+    #plots of bragg peaks for different x positions - integration method
     plt.figure()
     plt.plot(np.arange(1600, len(img_rows[0])), img_rows[0][1600:])
     plt.plot(np.arange(1600, len(img_rows[5])), img_rows[5][1600:])        
@@ -332,6 +334,7 @@ def process_img(proton_range):
     plt.close()
 
 
+#flask application management
 app = Flask('Image_analysis')
 
 status_file = "status.txt"
@@ -388,9 +391,9 @@ def result():
 
     # Calculate means and standard deviations
     mean_integration = np.mean(ranges_integration) if ranges_integration.size > 0 else None
-    std_integration = np.std(ranges_integration) if ranges_integration.size > 0 else None
+    std_integration = np.std(ranges_integration)/3 if ranges_integration.size > 0 else None
     mean_clusterization = np.mean(ranges_clusterization) if ranges_clusterization.size > 0 else None
-    std_clusterization = np.std(ranges_clusterization) if ranges_clusterization.size > 0 else None
+    std_clusterization = np.std(ranges_clusterization)/3 if ranges_clusterization.size > 0 else None
 
     if not hasattr(app, 'shutdown_thread'):
         print("\nAnalysis completed. Click button on results page to shut down.")
@@ -413,7 +416,7 @@ def result():
 def shutdown_server():
     global shutdown_requested
     shutdown_requested = True
-    return '', 204  # No Content
+    return '', 204  
 
 @app.route('/shutdown_page', methods=['GET'])
 def shutdown_page():
